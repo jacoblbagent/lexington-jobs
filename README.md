@@ -46,7 +46,11 @@ after it finishes if you only need the page rebuilt.
 ## Data
 
 `src/jobsData.ts` holds the listings the page renders. Level is LinkedIn's own
-seniority field, read from the posting page; postings that report nothing show
+seniority field, read from the posting page, except where the title contradicts
+it: a title carrying intern, co-op, junior or entry reads as entry, and one
+carrying sr, senior, lead, staff, principal, chief, director, manager, III or IV
+reads as senior, marked `(title)` so the derived value is visible next to the
+sourced ones. Postings where neither the title nor LinkedIn says anything show
 `Not listed`. Listings were collected on November 13, 2026.
 
 `jobs.json` is the raw collected dump: 353 unique postings from LinkedIn's guest

@@ -6,8 +6,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Nov 12, 2026",
   "url": "https://www.linkedin.com/jobs/view/process-engineer-iii-at-gray-aes-4455457440",
-  "level": "Entry level",
-  "levelText": "Entry level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4488556523",
@@ -16,8 +16,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Nov 12, 2026",
   "url": "https://www.linkedin.com/jobs/view/ndt-ndi-test-engineer-stf-e4-at-lockheed-martin-4488556523",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Staff (title)",
+  "levelText": "Staff (title)"
  },
  {
   "id": "4488547956",
@@ -26,8 +26,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Nov 12, 2026",
   "url": "https://www.linkedin.com/jobs/view/mechanical-engineer-stf-e4-at-lockheed-martin-4488547956",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Staff (title)",
+  "levelText": "Staff (title)"
  },
  {
   "id": "4488552690",
@@ -36,8 +36,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Nov 12, 2026",
   "url": "https://www.linkedin.com/jobs/view/mechanical-engineer-sr-e3-at-lockheed-martin-4488552690",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4488556664",
@@ -66,8 +66,8 @@ export const jobs: Job[] = [
   "location": "Nicholasville",
   "posted": "Nov 11, 2026",
   "url": "https://www.linkedin.com/jobs/view/sr-process-engineer-at-pinnaql-4490000385",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4484293181",
@@ -86,8 +86,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Nov 10, 2026",
   "url": "https://www.linkedin.com/jobs/view/senior-mechanical-engineer-at-cmta-inc-4481220072",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4488608614",
@@ -106,8 +106,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Nov 10, 2026",
   "url": "https://www.linkedin.com/jobs/view/director-of-mechanical-engineering-at-simply-driven-executive-search-4489485028",
-  "level": "Director",
-  "levelText": "Director"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4489108497",
@@ -116,8 +116,8 @@ export const jobs: Job[] = [
   "location": "Berea",
   "posted": "Nov 9, 2026",
   "url": "https://www.linkedin.com/jobs/view/process-engineering-intern-at-novelis-4489108497",
-  "level": "Internship",
-  "levelText": "Internship"
+  "level": "Internship (title)",
+  "levelText": "Internship (title)"
  },
  {
   "id": "4435331348",
@@ -136,8 +136,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Nov 7, 2026",
   "url": "https://www.linkedin.com/jobs/view/mechanical-engineer-intern-co-op-spring-2027-at-cmta-inc-4453145823",
-  "level": "Internship",
-  "levelText": "Internship"
+  "level": "Internship (title)",
+  "levelText": "Internship (title)"
  },
  {
   "id": "4480514112",
@@ -156,8 +156,8 @@ export const jobs: Job[] = [
   "location": "Harrodsburg",
   "posted": "Nov 6, 2026",
   "url": "https://www.linkedin.com/jobs/view/sr-melting-process-engineer-gorilla-glass-at-corning-incorporated-4486281956",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4453133992",
@@ -166,8 +166,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Nov 6, 2026",
   "url": "https://www.linkedin.com/jobs/view/mechanical-engineer-intern-co-op-summer-2027-at-cmta-inc-4453133992",
-  "level": "Internship",
-  "levelText": "Internship"
+  "level": "Internship (title)",
+  "levelText": "Internship (title)"
  },
  {
   "id": "4478811211",
@@ -206,8 +206,8 @@ export const jobs: Job[] = [
   "location": "Danville",
   "posted": "Nov 3, 2026",
   "url": "https://www.linkedin.com/jobs/view/manufacturing-engineer-aerospace-at-parker-hannifin-4470244050",
-  "level": "Not Applicable",
-  "levelText": "Not Applicable"
+  "level": "Not listed",
+  "levelText": "Not listed"
  },
  {
   "id": "4486412525",
@@ -256,8 +256,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Nov 1, 2026",
   "url": "https://www.linkedin.com/jobs/view/sr-mechanical-engineer-at-gray-aes-4450378497",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4469259696",
@@ -296,8 +296,8 @@ export const jobs: Job[] = [
   "location": "Harrodsburg",
   "posted": "Oct 29, 2026",
   "url": "https://www.linkedin.com/jobs/view/melting-forming-process-engineering-intern-summer-2027-at-corning-incorporated-4483401150",
-  "level": "Internship",
-  "levelText": "Internship"
+  "level": "Internship (title)",
+  "levelText": "Internship (title)"
  },
  {
   "id": "4457115202",
@@ -356,8 +356,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Oct 23, 2026",
   "url": "https://www.linkedin.com/jobs/view/sr-process-engineer-japanese-speaking-at-gray-aes-4428098091",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4452826365",
@@ -446,8 +446,8 @@ export const jobs: Job[] = [
   "location": "Berea",
   "posted": "Oct 16, 2026",
   "url": "https://www.linkedin.com/jobs/view/senior-production-engineer-at-astemo-ltd-4440733922",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4481030982",
@@ -476,8 +476,8 @@ export const jobs: Job[] = [
   "location": "Berea",
   "posted": "Sep 30, 2026",
   "url": "https://www.linkedin.com/jobs/view/reliability-engineer-sr-technician-j0051703-at-astemo-ltd-4468329248",
-  "level": "Entry level",
-  "levelText": "Entry level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4473985154",
@@ -526,8 +526,8 @@ export const jobs: Job[] = [
   "location": "Shelbyville",
   "posted": "Sep 24, 2026",
   "url": "https://www.linkedin.com/jobs/view/product-development-engineer-principal-at-amcor-4471809117",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4481203176",
@@ -556,8 +556,8 @@ export const jobs: Job[] = [
   "location": "Harrodsburg",
   "posted": "Aug 19, 2026",
   "url": "https://www.linkedin.com/jobs/view/sr-mechanical-engineer-j0051519-at-astemo-ltd-4456358305",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4431995130",
@@ -596,8 +596,8 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Jan 21, 2026",
   "url": "https://www.linkedin.com/jobs/view/chief-mechanical-engineer-at-grw-4365242747",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  },
  {
   "id": "4342797000",
@@ -626,7 +626,7 @@ export const jobs: Job[] = [
   "location": "Lexington",
   "posted": "Aug 10, 2025",
   "url": "https://www.linkedin.com/jobs/view/senior-mechanical-engineer-aec-industry-at-klh-engineers-4295949522",
-  "level": "Mid-Senior level",
-  "levelText": "Mid-Senior level"
+  "level": "Senior (title)",
+  "levelText": "Senior (title)"
  }
 ];

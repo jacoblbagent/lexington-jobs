@@ -7,17 +7,15 @@
    as grey. Blue here; for orange use light-dark(#E8710A, #FF9A3C) and
    light-dark(#E8710A1F, #FF9A3C29). */
 
+/* The wrapper carries no box of its own: `display: contents` leaves the title
+   text and the button in the cell's normal inline flow, so the favorites star
+   (inserted first) and the collapse chevron (appended last) keep their places
+   and a title that wraps to two lines still ends with the button, never a row
+   of its own. A flex box on the cell itself breaks the table's column widths. */
 .job-title-cell {
   --job-link-color: light-dark(#0064e0, #2694fe);
   --job-link-tint: light-dark(#0064e01f, #2694fe29);
-  /* Inline-level, not block: the favorites star is inserted into this cell
-     before the wrapper, so a block-level wrapper would push the title onto its
-     own line under the star. */
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  max-width: 100%;
-  vertical-align: middle;
+  display: contents;
 }
 
 .job-title-text {
@@ -34,6 +32,8 @@
   justify-content: center;
   width: 22px;
   height: 22px;
+  margin-left: 6px;
+  vertical-align: middle;
   border-radius: 6px;
   color: var(--job-link-color);
   background: var(--job-link-tint);

@@ -1039,17 +1039,15 @@ th.sortable[aria-sort='descending'] .sort-up {
    as grey. Blue here; for orange use light-dark(#E8710A, #FF9A3C) and
    light-dark(#E8710A1F, #FF9A3C29). */
 
+/* The wrapper carries no box of its own: `display: contents` leaves the title
+   text and the button in the cell's normal inline flow, so the favorites star
+   (inserted first) and the collapse chevron (appended last) keep their places
+   and a title that wraps to two lines still ends with the button, never a row
+   of its own. A flex box on the cell itself breaks the table's column widths. */
 .job-title-cell {
   --job-link-color: light-dark(#0064e0, #2694fe);
   --job-link-tint: light-dark(#0064e01f, #2694fe29);
-  /* Inline-level, not block: the favorites star is inserted into this cell
-     before the wrapper, so a block-level wrapper would push the title onto its
-     own line under the star. */
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  max-width: 100%;
-  vertical-align: middle;
+  display: contents;
 }
 
 .job-title-text {
@@ -1066,6 +1064,8 @@ th.sortable[aria-sort='descending'] .sort-up {
   justify-content: center;
   width: 22px;
   height: 22px;
+  margin-left: 6px;
+  vertical-align: middle;
   border-radius: 6px;
   color: var(--job-link-color);
   background: var(--job-link-tint);
@@ -1096,342 +1096,6 @@ th.sortable[aria-sort='descending'] .sort-up {
   overflow: visible;
 }
 </style>
-<style data-arden-jobs-req="css">
-/* Requirements under each listing. The block hangs off the row above it: a rule
-   drops from the row's bottom edge and turns right into the block, so the
-   block reads as that listing's own detail rather than a second listing.
-
-   The sub-row carries data-expansion-panel, which the table's striping already
-   excludes from `:nth-child(even of :not([data-expansion-panel]))` - so the
-   zebra and the "newest first" alternation stay exactly as they were. */
-
-:root {
-  /* The table's border token is 10% alpha, too faint to read as a connector. */
-  --req-connector: color-mix(in srgb, var(--color-text-secondary) 85%, transparent);
-}
-
-tr.req-row {
-  background: transparent;
-}
-
-tr.req-row > td.req-cell {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  vertical-align: top;
-}
-
-.req-branch {
-  position: relative;
-  /* Left inset lines the elbow up under the row's own title text, not under the
-     table edge. */
-  margin-left: 8px;
-  padding: 4px 24px 12px 20px;
-}
-
-/* The connector: a rule from the row's divider running the full height of the
-   block, with a stub turning right into the label. Drawn on the wrapper so it
-   never widens the cell. The table's own border token is 10% alpha and reads as
-   nothing here, so the connector borrows the secondary text colour at partial
-   strength. */
-.req-branch::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: -1px;
-  bottom: 12px;
-  border-left: 1px solid var(--req-connector);
-}
-
-.req-branch::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 12px;
-  width: 16px;
-  border-top: 1px solid var(--req-connector);
-}
-
-.req-label {
-  display: block;
-  margin: 0 0 4px;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
-  color: var(--color-text-secondary);
-}
-
-.req-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  max-width: 78ch;
-}
-
-.req-list li {
-  position: relative;
-  padding-left: 13px;
-  font-size: 13px;
-  line-height: 19px;
-  color: var(--color-text-secondary);
-  text-wrap: pretty;
-}
-
-.req-list li.req-certification {
-  color: light-dark(#806000, #f4cc55);
-}
-
-.req-list li::before {
-  content: '';
-  position: absolute;
-  left: 1px;
-  top: 8px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.45;
-}
-
-.req-more,
-.req-none {
-  margin: 5px 0 0;
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--color-text-secondary);
-  opacity: 0.8;
-}
-
-/* The listing row is the toggle (scripts/collapse-requirements.js): a click
-   anywhere in it but a link or the star folds that listing's requirements
-   away, and the chevron beside the title turns to point at the folded block.
-   Closed is a class, not the hidden attribute, because the location and
-   favorites filters already own hidden on these sub-rows: the two states
-   compose instead of undoing each other. */
-
-tr.astryx-table-row[aria-controls] {
-  cursor: pointer;
-}
-
-tr.astryx-table-row[aria-controls]:focus-visible {
-  outline: 1px solid var(--color-accent);
-  outline-offset: -2px;
-}
-
-tr.req-row.req-closed {
-  display: none;
-}
-
-/* The chevron sits immediately after the role title, a small gap off its last
-   word. The role link is an inline-flex box from the design system, which
-   shrink-wraps to the cell and would push a sibling span onto its own line
-   under a two-line title; as plain inline it wraps like running text, so the
-   chevron follows the title wherever it ends. */
-tr.astryx-table-row[aria-controls] > td:first-child > a.astryx-link {
-  display: inline;
-}
-
-.req-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 12px;
-  height: 12px;
-  margin-left: 6px;
-  vertical-align: -1px;
-  color: var(--color-text-secondary);
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.req-toggle svg {
-  display: block;
-  transition: transform 120ms ease;
-}
-
-.req-toggle path {
-  fill: currentColor;
-}
-
-tr.astryx-table-row:hover .req-toggle,
-tr.astryx-table-row:focus-visible .req-toggle {
-  opacity: 1;
-}
-
-/* Pointing down is open, pointing right is folded. */
-tr.astryx-table-row.req-closed .req-toggle svg {
-  transform: rotate(-90deg);
-}
-
-/* Certification text uses a contrasting yellow for each color scheme. */
-</style>
-<script data-arden-jobs-collapse="js">
-/* Fold a listing's requirements away by clicking its row.
-   The requirement sub-rows are always open as rendered (scripts/inject-requirements.py);
-   this makes the listing row itself the toggle, so a reader can close the
-   postings they have read. Plain DOM, no dependencies, injected after render by
-   scripts/inject-collapse-requirements.py.
-
-   The state is a set of closed listing ids in localStorage, and the id is the
-   number at the end of the posting URL, the same key the requirements and
-   favorites use. So a closed row stays closed through a reload, a sort, a
-   filter, and a rebuild of the page. */
-
-(function () {
-  'use strict';
-
-  var STORE = 'arden-jobs.collapsed';
-  var PANEL_FOR = 'data-arden-jobs-req-for';
-
-  // Clicking these inside a row has its own job; the row must not swallow it.
-  var INTERACTIVE = 'a, button, input, label, select, textarea';
-
-  var table = document.querySelector('table.astryx-table');
-  if (!table) return;
-
-  var body = table.querySelector('tbody');
-  var titleHeader = table.querySelector('thead th[data-column-key="title"]');
-  if (!body || !titleHeader) return;
-
-  var titleIndex = titleHeader.cellIndex;
-
-  function idOf(row) {
-    var cell = row.cells[titleIndex];
-    var link = cell && cell.querySelector('a');
-    if (!link) return null;
-    var found = /-(\d{5,})\/?(?:[?#].*)?$/.exec(link.getAttribute('href') || '');
-    return found ? found[1] : null;
-  }
-
-  // inject-requirements.py writes the listing id on each sub-row, so the panel
-  // is paired by data, not by position: sorting only moves rows, and this
-  // pairing survives it.
-  var panelFor = {};
-  Array.prototype.forEach.call(body.rows, function (row) {
-    var id = row.getAttribute(PANEL_FOR);
-    if (id) panelFor[id] = row;
-  });
-
-  var entries = [];
-  var entryOf = new WeakMap();
-  Array.prototype.forEach.call(body.rows, function (row) {
-    if (row.hasAttribute('data-expansion-panel')) return;
-    var id = idOf(row);
-    var panel = id ? panelFor[id] : null;
-    if (!panel) return;
-    var entry = {id: id, row: row, panel: panel};
-    entries.push(entry);
-    entryOf.set(row, entry);
-  });
-  if (!entries.length) return;
-
-  // Inline SVG for the same reason the sort indicator is: the webfont is
-  // stripped from the render and a glyph would land in a fallback face.
-  var CHEVRON =
-    '<svg viewBox="0 0 8 5" width="9" height="6" focusable="false">' +
-    '<path d="M0 0h8L4 5Z"/>' +
-    '</svg>';
-
-  entries.forEach(function (entry) {
-    // The chevron is placed by CSS at the right edge of the title cell, not
-    // after the link: the link is a stretched inline-flex box, so a sibling
-    // span would wrap onto its own line under a two-line title.
-    var cell = entry.row.cells[titleIndex];
-    var toggle = document.createElement('span');
-    toggle.className = 'req-toggle';
-    toggle.setAttribute('aria-hidden', 'true');
-    toggle.innerHTML = CHEVRON;
-    cell.appendChild(toggle);
-
-    // The row is the control: it needs a target for the panel it opens, and a
-    // tab stop so the keyboard can reach it without opening the posting.
-    if (!entry.panel.id) entry.panel.id = 'req-panel-' + entry.id;
-    entry.row.setAttribute('aria-controls', entry.panel.id);
-    entry.row.tabIndex = 0;
-  });
-
-  function load() {
-    try {
-      var raw = window.localStorage.getItem(STORE);
-      var list = raw ? JSON.parse(raw) : [];
-      var saved = {};
-      if (Array.isArray(list)) {
-        list.forEach(function (id) {
-          if (id) saved[String(id)] = true;
-        });
-      }
-      return saved;
-    } catch (error) {
-      // Private mode or a corrupt value: the rows just open on every visit.
-      return {};
-    }
-  }
-
-  function save() {
-    try {
-      window.localStorage.setItem(STORE, JSON.stringify(Object.keys(closed)));
-    } catch (error) {
-      /* nothing else to do */
-    }
-  }
-
-  var closed = load();
-
-  // Closed is a class, not the hidden attribute: the location and favorites
-  // filters already own hidden on these sub-rows, and two owners of one
-  // attribute undo each other. The two states simply compose.
-  function paint(entry) {
-    var isClosed = !!closed[entry.id];
-    entry.panel.classList.toggle('req-closed', isClosed);
-    entry.row.classList.toggle('req-closed', isClosed);
-    entry.row.setAttribute('aria-expanded', isClosed ? 'false' : 'true');
-  }
-
-  function toggle(entry) {
-    if (closed[entry.id]) delete closed[entry.id];
-    else closed[entry.id] = true;
-    paint(entry);
-    save();
-  }
-
-  body.addEventListener('click', function (event) {
-    var target = event.target;
-    if (!target || !target.closest) return;
-    var row = target.closest('tr.astryx-table-row');
-    if (!row) return;
-    var entry = entryOf.get(row);
-    if (!entry) return;
-    if (target.closest(INTERACTIVE)) return;
-    // Letting go of a text selection inside the row is not a click on the row.
-    var selection = window.getSelection && window.getSelection();
-    if (selection && String(selection).length) return;
-    toggle(entry);
-  });
-
-  body.addEventListener('keydown', function (event) {
-    if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') return;
-    var row = event.target;
-    if (!row || !row.classList || !row.classList.contains('astryx-table-row')) return;
-    var entry = entryOf.get(row);
-    if (!entry) return;
-    // Space would scroll the page otherwise.
-    event.preventDefault();
-    toggle(entry);
-  });
-
-  // A second tab on this page should follow along rather than overwrite.
-  window.addEventListener('storage', function (event) {
-    if (event.key !== null && event.key !== STORE) return;
-    closed = load();
-    entries.forEach(paint);
-  });
-
-  entries.forEach(paint);
-})();
-</script>
 <style data-arden-jobs-location="css">
 /* The injected location filter: a label, a multi-select button, a checkbox panel
    and one live count. The button follows the page's own control styling
@@ -1958,6 +1622,178 @@ tbody tr[hidden] {
   apply();
 })();
 </script>
+<style data-arden-jobs-req="css">
+/* Requirements under each listing. The block hangs off the row above it: a rule
+   drops from the row's bottom edge and turns right into the block, so the
+   block reads as that listing's own detail rather than a second listing.
+
+   The sub-row carries data-expansion-panel, which the table's striping already
+   excludes from `:nth-child(even of :not([data-expansion-panel]))` - so the
+   zebra and the "newest first" alternation stay exactly as they were. */
+
+:root {
+  /* The table's border token is 10% alpha, too faint to read as a connector. */
+  --req-connector: color-mix(in srgb, var(--color-text-secondary) 85%, transparent);
+}
+
+tr.req-row {
+  background: transparent;
+}
+
+tr.req-row > td.req-cell {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  vertical-align: top;
+}
+
+.req-branch {
+  position: relative;
+  /* Left inset lines the elbow up under the row's own title text, not under the
+     table edge. */
+  margin-left: 8px;
+  padding: 4px 24px 12px 20px;
+}
+
+/* The connector: a rule from the row's divider running the full height of the
+   block, with a stub turning right into the label. Drawn on the wrapper so it
+   never widens the cell. The table's own border token is 10% alpha and reads as
+   nothing here, so the connector borrows the secondary text colour at partial
+   strength. */
+.req-branch::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: 12px;
+  border-left: 1px solid var(--req-connector);
+}
+
+.req-branch::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 16px;
+  border-top: 1px solid var(--req-connector);
+}
+
+.req-label {
+  display: block;
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--color-text-secondary);
+}
+
+.req-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 78ch;
+}
+
+.req-list li {
+  position: relative;
+  padding-left: 13px;
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--color-text-secondary);
+  text-wrap: pretty;
+}
+
+.req-list li.req-certification {
+  color: light-dark(#806000, #f4cc55);
+}
+
+.req-list li::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.45;
+}
+
+.req-more,
+.req-none {
+  margin: 5px 0 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text-secondary);
+  opacity: 0.8;
+}
+
+/* The listing row is the toggle (scripts/collapse-requirements.js): a click
+   anywhere in it but a link or the star folds that listing's requirements
+   away, and the chevron beside the title turns to point at the folded block.
+   Closed is a class, not the hidden attribute, because the location and
+   favorites filters already own hidden on these sub-rows: the two states
+   compose instead of undoing each other. */
+
+tr.astryx-table-row[aria-controls] {
+  cursor: pointer;
+}
+
+tr.astryx-table-row[aria-controls]:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+tr.req-row.req-closed {
+  display: none;
+}
+
+/* The chevron sits immediately after the role title, a small gap off its last
+   word. The role link is an inline-flex box from the design system, which
+   shrink-wraps to the cell and would push a sibling span onto its own line
+   under a two-line title; as plain inline it wraps like running text, so the
+   chevron follows the title wherever it ends. */
+tr.astryx-table-row[aria-controls] > td:first-child > a.astryx-link {
+  display: inline;
+}
+
+.req-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  margin-left: 6px;
+  vertical-align: -1px;
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.req-toggle svg {
+  display: block;
+  transition: transform 120ms ease;
+}
+
+.req-toggle path {
+  fill: currentColor;
+}
+
+tr.astryx-table-row:hover .req-toggle,
+tr.astryx-table-row:focus-visible .req-toggle {
+  opacity: 1;
+}
+
+/* Pointing down is open, pointing right is folded. */
+tr.astryx-table-row.req-closed .req-toggle svg {
+  transform: rotate(-90deg);
+}
+
+/* Certification text uses a contrasting yellow for each color scheme. */
+</style>
 <style data-arden-jobs-favorites="css">
 /* Favorites: a star per listing and a "Favorites" checkbox beside the location
    filter. Injected after render by scripts/inject-favorites.py, so everything
@@ -2450,6 +2286,170 @@ tbody tr[hidden] {
     if (entry.years < 3 || !entry.evidence) return;
     entry.row.title = 'Requires ' + entry.years + '+ years: ' + entry.evidence;
   });
+})();
+</script>
+<script data-arden-jobs-collapse="js">
+/* Fold a listing's requirements away by clicking its row.
+   The requirement sub-rows are always open as rendered (scripts/inject-requirements.py);
+   this makes the listing row itself the toggle, so a reader can close the
+   postings they have read. Plain DOM, no dependencies, injected after render by
+   scripts/inject-collapse-requirements.py.
+
+   The state is a set of closed listing ids in localStorage, and the id is the
+   number at the end of the posting URL, the same key the requirements and
+   favorites use. So a closed row stays closed through a reload, a sort, a
+   filter, and a rebuild of the page. */
+
+(function () {
+  'use strict';
+
+  var STORE = 'arden-jobs.collapsed';
+  var PANEL_FOR = 'data-arden-jobs-req-for';
+
+  // Clicking these inside a row has its own job; the row must not swallow it.
+  var INTERACTIVE = 'a, button, input, label, select, textarea';
+
+  var table = document.querySelector('table.astryx-table');
+  if (!table) return;
+
+  var body = table.querySelector('tbody');
+  var titleHeader = table.querySelector('thead th[data-column-key="title"]');
+  if (!body || !titleHeader) return;
+
+  var titleIndex = titleHeader.cellIndex;
+
+  function idOf(row) {
+    var cell = row.cells[titleIndex];
+    var link = cell && cell.querySelector('a');
+    if (!link) return null;
+    var found = /-(\d{5,})\/?(?:[?#].*)?$/.exec(link.getAttribute('href') || '');
+    return found ? found[1] : null;
+  }
+
+  // inject-requirements.py writes the listing id on each sub-row, so the panel
+  // is paired by data, not by position: sorting only moves rows, and this
+  // pairing survives it.
+  var panelFor = {};
+  Array.prototype.forEach.call(body.rows, function (row) {
+    var id = row.getAttribute(PANEL_FOR);
+    if (id) panelFor[id] = row;
+  });
+
+  var entries = [];
+  var entryOf = new WeakMap();
+  Array.prototype.forEach.call(body.rows, function (row) {
+    if (row.hasAttribute('data-expansion-panel')) return;
+    var id = idOf(row);
+    var panel = id ? panelFor[id] : null;
+    if (!panel) return;
+    var entry = {id: id, row: row, panel: panel};
+    entries.push(entry);
+    entryOf.set(row, entry);
+  });
+  if (!entries.length) return;
+
+  // Inline SVG for the same reason the sort indicator is: the webfont is
+  // stripped from the render and a glyph would land in a fallback face.
+  var CHEVRON =
+    '<svg viewBox="0 0 8 5" width="9" height="6" focusable="false">' +
+    '<path d="M0 0h8L4 5Z"/>' +
+    '</svg>';
+
+  entries.forEach(function (entry) {
+    // The chevron is placed by CSS at the right edge of the title cell, not
+    // after the link: the link is a stretched inline-flex box, so a sibling
+    // span would wrap onto its own line under a two-line title.
+    var cell = entry.row.cells[titleIndex];
+    var toggle = document.createElement('span');
+    toggle.className = 'req-toggle';
+    toggle.setAttribute('aria-hidden', 'true');
+    toggle.innerHTML = CHEVRON;
+    cell.appendChild(toggle);
+
+    // The row is the control: it needs a target for the panel it opens, and a
+    // tab stop so the keyboard can reach it without opening the posting.
+    if (!entry.panel.id) entry.panel.id = 'req-panel-' + entry.id;
+    entry.row.setAttribute('aria-controls', entry.panel.id);
+    entry.row.tabIndex = 0;
+  });
+
+  function load() {
+    try {
+      var raw = window.localStorage.getItem(STORE);
+      var list = raw ? JSON.parse(raw) : [];
+      var saved = {};
+      if (Array.isArray(list)) {
+        list.forEach(function (id) {
+          if (id) saved[String(id)] = true;
+        });
+      }
+      return saved;
+    } catch (error) {
+      // Private mode or a corrupt value: the rows just open on every visit.
+      return {};
+    }
+  }
+
+  function save() {
+    try {
+      window.localStorage.setItem(STORE, JSON.stringify(Object.keys(closed)));
+    } catch (error) {
+      /* nothing else to do */
+    }
+  }
+
+  var closed = load();
+
+  // Closed is a class, not the hidden attribute: the location and favorites
+  // filters already own hidden on these sub-rows, and two owners of one
+  // attribute undo each other. The two states simply compose.
+  function paint(entry) {
+    var isClosed = !!closed[entry.id];
+    entry.panel.classList.toggle('req-closed', isClosed);
+    entry.row.classList.toggle('req-closed', isClosed);
+    entry.row.setAttribute('aria-expanded', isClosed ? 'false' : 'true');
+  }
+
+  function toggle(entry) {
+    if (closed[entry.id]) delete closed[entry.id];
+    else closed[entry.id] = true;
+    paint(entry);
+    save();
+  }
+
+  body.addEventListener('click', function (event) {
+    var target = event.target;
+    if (!target || !target.closest) return;
+    var row = target.closest('tr.astryx-table-row');
+    if (!row) return;
+    var entry = entryOf.get(row);
+    if (!entry) return;
+    if (target.closest(INTERACTIVE)) return;
+    // Letting go of a text selection inside the row is not a click on the row.
+    var selection = window.getSelection && window.getSelection();
+    if (selection && String(selection).length) return;
+    toggle(entry);
+  });
+
+  body.addEventListener('keydown', function (event) {
+    if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') return;
+    var row = event.target;
+    if (!row || !row.classList || !row.classList.contains('astryx-table-row')) return;
+    var entry = entryOf.get(row);
+    if (!entry) return;
+    // Space would scroll the page otherwise.
+    event.preventDefault();
+    toggle(entry);
+  });
+
+  // A second tab on this page should follow along rather than overwrite.
+  window.addEventListener('storage', function (event) {
+    if (event.key !== null && event.key !== STORE) return;
+    closed = load();
+    entries.forEach(paint);
+  });
+
+  entries.forEach(paint);
 })();
 </script>
 </body></html>

@@ -19,9 +19,10 @@ the rendered "newest first" order.
 
 The page also carries a Location filter, added after render from
 `scripts/location-filter.{js,css}`: a multi-select built from the Location cells,
-sorted by number of roles, with Lexington and Georgetown checked on first paint.
-Checkbox changes apply instantly; Default restores that opening set and All
-clears the filter, and an empty selection reads as unfiltered.
+sorted by number of roles, every town checked on first paint (no town in the
+ring is far enough to hide by default). Checkbox changes apply instantly;
+Default restores that opening set and All clears the filter, and an empty
+selection reads as unfiltered.
 
 Each listing carries its requirements as a sub-row underneath it, added after
 render by `scripts/inject-requirements.py` from `src/requirements.json`, and

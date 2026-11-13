@@ -193,28 +193,25 @@
     var filtering = names.length > 0 && names.length < towns.length;
     var favoritesOnly = !!shared.favoritesOnly;
     var isFavorite = typeof shared.isFavorite === 'function' ? shared.isFavorite : null;
-    // The level filter (scripts/level-filter.js) publishes a predicate rather
-    // than hiding rows itself, so both filters resolve in this one pass.
-    var levelFilter = typeof shared.levelFilter === 'function' ? shared.levelFilter : null;
-    var levelActive = !!shared.levelActive && !!levelFilter;
-    // The experience filter (scripts/experience-filter.js) publishes in the same
-    // shape: a predicate and whether its "Skip 3+ years" box is checked.
+    // The experience filter (scripts/experience-filter.js) publishes a predicate
+    // that always applies: the "3+ years" box is off by default, so those roles
+    // stay out until it is checked. The count shows while they are being left
+    // out, so the missing rows are accounted for.
     var experienceFilter =
       typeof shared.experienceFilter === 'function' ? shared.experienceFilter : null;
-    var experienceActive = !!shared.experienceActive && !!experienceFilter;
+    var experienceActive = !!experienceFilter && !shared.experienceInclude;
     var shown = 0;
 
     entries.forEach(function (entry) {
-      // Favorites win over the town and level selections: a saved role is the
-      // reader's own shortlist, so checking Favorites must not hide one because
-      // its town or level happens to be unchecked.
+      // Favorites win over the town selection: a saved role is the reader's own
+      // shortlist, so checking Favorites must not hide one because its town
+      // happens to be unchecked.
       var visible = favoritesOnly
         ? (isFavorite ? isFavorite(entry.row) : false)
         : (!filtering ||
           entry.towns.some(function (town) {
             return selected[town];
           })) &&
-          (!levelActive || levelFilter(entry.row)) &&
           (!experienceActive || experienceFilter(entry.row));
       entry.row.hidden = !visible;
       entry.panels.forEach(function (panel) {
@@ -227,7 +224,7 @@
     value.textContent = text;
     button.setAttribute('aria-label', 'Location: ' + text);
     status.textContent =
-      filtering || favoritesOnly || levelActive || experienceActive
+      filtering || favoritesOnly || experienceActive
         ? 'Showing ' + shown + ' of ' + entries.length
         : '';
   }

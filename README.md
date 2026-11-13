@@ -14,7 +14,7 @@ Live: https://jacoblbagent.github.io/lexington-jobs/
 
 The file is self-contained: inlined CSS, no network requests. The table sits in
 Astryx's scroll wrapper, which ships `overflow-x: clip`; `scripts/table-sort.css`
-overrides it to `auto` so a phone can scroll to the Location, Level and Posted
+overrides it to `auto` so a phone can scroll to the Location and Posted
 columns instead of losing them off the right edge. One inline script
 is added after render (see `scripts/table-sort.js`) so the column headers sort:
 click a header for ascending, again for descending, a third time to return to
@@ -27,18 +27,12 @@ ring is far enough to hide by default). Checkbox changes apply instantly;
 Default restores that opening set and All clears the filter, and an empty
 selection reads as unfiltered.
 
-A Level filter sits beside it, injected from `scripts/level-filter.js`, built
-from the Level cells in seniority order with per-level counts. Every level is
-checked on first paint; its presets are Entry level (entry plus internship) and
-All. It publishes a predicate and lets the location filter resolve both at once,
-so the two stack and the bar keeps one live count: Location "Lexington" plus
-Level "Entry level" reads "Showing 6 of 62".
-
-A "Skip 3+ years" checkbox sits after Favorites, injected from
+A "3+ years" checkbox sits after Favorites, injected from
 `scripts/experience-filter.js` with `src/experience.json`: the 33 listings whose
 posting asks for three or more years of experience, each with the sentence that
-says so. It is off on first paint, so the page opens on all 62 roles, and
-checking it drops those 33 ("Showing 29 of 62"). The flag is curated from the
+says so. It is off on first paint, so the page opens on the 29 roles open to
+less experience ("Showing 29 of 62"), and checking it adds those 33 back. The
+flag is curated from the
 full posting text rather than the requirements list, which caps at eight items
 and can cut the years line; a "preferred"/"desired" years figure, a range
 starting below three (0-3, 1-3) and an alternative path needing only two years
@@ -67,13 +61,14 @@ after it finishes if you only need the page rebuilt.
 
 ## Data
 
-`src/jobsData.ts` holds the listings the page renders. Level is LinkedIn's own
-seniority field, read from the posting page, except where the title contradicts
-it: a title carrying intern, co-op, junior or entry reads as entry, and one
-carrying sr, senior, lead, staff, principal, chief, director, manager, III or IV
-reads as senior, marked `(title)` so the derived value is visible next to the
-sourced ones. Postings where neither the title nor LinkedIn says anything show
-`Not listed`. Listings were collected on November 13, 2026.
+`src/jobsData.ts` holds the listings the page renders. Each listing also carries
+LinkedIn's own seniority field as `level`, read from the posting page, except
+where the title contradicts it: a title carrying intern, co-op, junior or entry
+reads as entry, and one carrying sr, senior, lead, staff, principal, chief,
+director, manager, III or IV reads as senior, marked `(title)` so the derived
+value is visible next to the sourced ones; postings where neither the title nor
+LinkedIn says anything show `Not listed`. The page no longer renders that field.
+Listings were collected on November 13, 2026.
 
 `jobs.json` is the raw collected dump: 353 unique postings from LinkedIn's guest
 search, 322 of them inside the city whitelist (Lexington, Georgetown,

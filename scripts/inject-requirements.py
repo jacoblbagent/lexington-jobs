@@ -25,15 +25,20 @@ ROW = re.compile(r'<tr class="astryx-table-row[^"]*">.*?</tr>', re.S)
 ID = re.compile(r'linkedin\.com/jobs/view/[^"]*-(\d+)"')
 
 
-def cell_html(job_id, entry):
+COLUMNS = re.compile(r'<th data-column-key=')
+
+
+def cell_html(job_id, entry, columns):
     """One listing's requirements block: a bullet list, or a plain line when the
     posting lists none. `total` is how many the posting actually carried, so a
-    list cut at the display cap says so instead of looking complete."""
+    list cut at the display cap says so instead of looking complete. `columns`
+    is the page's header-cell count, so the sub-row spans the table whatever
+    columns it renders."""
     items = entry.get("req") or []
     total = entry.get("total") or len(items)
     parts = [
         f'<tr class="req-row" data-expansion-panel="" {MARKER}-for="{job_id}">',
-        '<td colspan="5" class="req-cell"><div class="req-branch">',
+        f'<td colspan="{columns}" class="req-cell"><div class="req-branch">',
     ]
     if items:
         parts.append('<span class="req-label">Requirements</span>')
@@ -72,6 +77,10 @@ def main():
         body_end = html.find("</tbody>", body_start)
         if body_start < 0 or body_end < 0:
             raise SystemExit(f"{page.name}: no table body found")
+        thead_end = html.find("</thead>", 0, body_start)
+        columns = len(COLUMNS.findall(html, 0, max(thead_end, body_start)))
+        if columns < 2:
+            raise SystemExit(f"{page.name}: could not read the column count")
         for match in ROW.finditer(html, body_start, body_end):
             row = match.group(0)
             job_id = None
@@ -84,7 +93,7 @@ def main():
             if entry is None:
                 missing.append(job_id or row[:60])
                 continue
-            out.append(cell_html(job_id, entry))
+            out.append(cell_html(job_id, entry, columns))
             placed += 1
         out.append(html[pos:])
         html = "".join(out)

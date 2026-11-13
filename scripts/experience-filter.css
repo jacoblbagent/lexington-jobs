@@ -1,4 +1,4 @@
-/* The "Skip 3+ years" checkbox beside the location filter. Injected after
+/* The "3+ years" checkbox beside the location filter. Injected after
    render by scripts/inject-experience-filter.py. It copies the favorites
    checkbox's shape so the bar reads as one row of controls, and takes every
    colour from the theme's custom properties so light and dark follow. */

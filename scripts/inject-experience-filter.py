@@ -2,7 +2,7 @@
 """Inline the experience filter into the jobs page.
 
 Same shape as inject-favorites.py: the Astryx renderer strips script, so the
-"Skip 3+ years" checkbox, its styles and the curated flag list
+"3+ years" checkbox, its styles and the curated flag list
 (src/experience.json) are added after the fact from scripts/experience-filter.*.
 The JSON rides in a script[type="application/json"] block the filter reads, so
 the data stays out of the script body and is still reviewable. The marker makes

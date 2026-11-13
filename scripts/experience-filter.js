@@ -3,9 +3,8 @@
    The renderer strips script, so this is injected after render by
    scripts/inject-experience-filter.py, together with src/experience.json (the
    curated list of listings whose posting asks for three or more years).
-   Offset by default: the page opens showing every listing, and one checkbox
-   drops the roles that want 3+ years so the rest reads as the roles open to
-   less experience.
+   The "3+ years" box is off on first paint, so those roles stay hidden and the
+   page reads as the roles open to less experience; checking it adds them back.
 
    Visibility stays owned by the location filter. This script publishes a
    predicate on window.__ardenJobs and asks that filter to re-apply, so the
@@ -77,7 +76,7 @@
 
   var text = document.createElement('span');
   text.className = 'exp-filter-label';
-  text.textContent = 'Skip 3+ years';
+  text.textContent = '3+ years';
 
   var count = document.createElement('span');
   count.className = 'exp-filter-num';
@@ -94,15 +93,16 @@
   var state = (window.__ardenJobs = window.__ardenJobs || {});
 
   box.addEventListener('change', function () {
-    state.experienceActive = box.checked;
+    state.experienceInclude = box.checked;
     if (typeof state.refresh === 'function') state.refresh();
     else applyOwn();
   });
 
-  // Fallback for a page without the location filter: hide the 3+ years rows.
+  // Fallback for a page without the location filter: hide the 3+ years rows
+  // until the box is checked.
   function applyOwn() {
     entries.forEach(function (entry) {
-      var hidden = state.experienceActive && entry.years >= 3;
+      var hidden = !state.experienceInclude && entry.years >= 3;
       entry.row.hidden = hidden;
       entry.panels.forEach(function (panel) {
         panel.hidden = hidden;
@@ -110,14 +110,20 @@
     });
   }
 
-  // Off on first paint: nothing is hidden until the box is checked.
-  state.experienceActive = false;
+  // Off on first paint: the 3+ years roles stay out until the box is checked.
+  state.experienceInclude = false;
   state.experienceFilter = function (row) {
     for (var i = 0; i < entries.length; i += 1) {
-      if (entries[i].row === row) return entries[i].years < 3;
+      if (entries[i].row === row) return state.experienceInclude || entries[i].years < 3;
     }
     return true;
   };
+
+  // The location filter paints before this script runs, and its first pass had
+  // no predicate to apply, so ask for one more pass now that the 3+ years rows
+  // should be out.
+  if (typeof state.refresh === 'function') state.refresh();
+  else applyOwn();
 
   // The evidence line rides on the row as a tooltip, so a reader can see why a
   // role was hidden without opening the posting.

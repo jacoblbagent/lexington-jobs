@@ -9,3 +9,6 @@ dist/
 # Collector output and logs
 collect.log
 requirements.log
+
+# Script caches
+__pycache__/

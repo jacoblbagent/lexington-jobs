@@ -10,7 +10,7 @@ Live: https://jacoblbagent.github.io/lexington-jobs/
 
 | File | Contents |
 |------|----------|
-| `docs/index.html` | Mechanical engineering roles (63) |
+| `docs/index.html` | Mechanical engineering roles (62) |
 
 The file is self-contained: inlined CSS, no network requests. One inline script
 is added after render (see `scripts/table-sort.js`) so the column headers sort:
@@ -29,7 +29,7 @@ from the Level cells in seniority order with per-level counts. Every level is
 checked on first paint; its presets are Entry level (entry plus internship) and
 All. It publishes a predicate and lets the location filter resolve both at once,
 so the two stack and the bar keeps one live count: Location "Lexington" plus
-Level "Entry level" reads "Showing 6 of 63".
+Level "Entry level" reads "Showing 6 of 62".
 
 Each listing carries its requirements as a sub-row underneath it, added after
 render by `scripts/inject-requirements.py` from `src/requirements.json`, and

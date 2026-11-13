@@ -72,6 +72,7 @@ EXCLUDE = {
     "Piping Engineer (Advanced Manufacturing)",
     "Hardware Design Engineer - R0058471",
     "Design Engineer I",
+    "NDT/NDI Test Engineer Stf - E4",
 }
 
 # A technician or drafting title is not an engineering role unless the title

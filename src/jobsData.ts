@@ -10,16 +10,6 @@ export const jobs: Job[] = [
   "levelText": "Senior (title)"
  },
  {
-  "id": "4488556523",
-  "title": "NDT/NDI Test Engineer Stf - E4",
-  "company": "Lockheed Martin",
-  "location": "Lexington",
-  "posted": "Nov 12, 2026",
-  "url": "https://www.linkedin.com/jobs/view/ndt-ndi-test-engineer-stf-e4-at-lockheed-martin-4488556523",
-  "level": "Staff (title)",
-  "levelText": "Staff (title)"
- },
- {
   "id": "4488547956",
   "title": "Mechanical Engineer Stf - E4",
   "company": "Lockheed Martin",

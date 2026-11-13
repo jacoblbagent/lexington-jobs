@@ -24,6 +24,13 @@ ring is far enough to hide by default). Checkbox changes apply instantly;
 Default restores that opening set and All clears the filter, and an empty
 selection reads as unfiltered.
 
+A Level filter sits beside it, injected from `scripts/level-filter.js`, built
+from the Level cells in seniority order with per-level counts. Every level is
+checked on first paint; its presets are Entry level (entry plus internship) and
+All. It publishes a predicate and lets the location filter resolve both at once,
+so the two stack and the bar keeps one live count: Location "Lexington" plus
+Level "Entry level" reads "Showing 6 of 63".
+
 Each listing carries its requirements as a sub-row underneath it, added after
 render by `scripts/inject-requirements.py` from `src/requirements.json`, and
 folds away on a row click (`scripts/collapse-requirements.js`).

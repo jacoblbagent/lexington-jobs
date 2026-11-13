@@ -18,6 +18,7 @@ touch docs/.nojekyll
 # fact from scripts/table-sort.{js,css}. Everything else in the page is untouched.
 python3 scripts/inject-table-sort.py
 python3 scripts/inject-location-filter.py
+python3 scripts/inject-level-filter.py
 python3 scripts/inject-requirements.py
 python3 scripts/inject-favorites.py
 python3 scripts/inject-collapse-requirements.py

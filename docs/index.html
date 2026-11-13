@@ -1444,6 +1444,11 @@ tbody tr[hidden] {
     // than hiding rows itself, so both filters resolve in this one pass.
     var levelFilter = typeof shared.levelFilter === 'function' ? shared.levelFilter : null;
     var levelActive = !!shared.levelActive && !!levelFilter;
+    // The experience filter (scripts/experience-filter.js) publishes in the same
+    // shape: a predicate and whether its "Skip 3+ years" box is checked.
+    var experienceFilter =
+      typeof shared.experienceFilter === 'function' ? shared.experienceFilter : null;
+    var experienceActive = !!shared.experienceActive && !!experienceFilter;
     var shown = 0;
 
     entries.forEach(function (entry) {
@@ -1456,7 +1461,8 @@ tbody tr[hidden] {
           entry.towns.some(function (town) {
             return selected[town];
           })) &&
-          (!levelActive || levelFilter(entry.row));
+          (!levelActive || levelFilter(entry.row)) &&
+          (!experienceActive || experienceFilter(entry.row));
       entry.row.hidden = !visible;
       entry.panels.forEach(function (panel) {
         panel.hidden = !visible;
@@ -1468,7 +1474,7 @@ tbody tr[hidden] {
     value.textContent = text;
     button.setAttribute('aria-label', 'Location: ' + text);
     status.textContent =
-      filtering || favoritesOnly || levelActive
+      filtering || favoritesOnly || levelActive || experienceActive
         ? 'Showing ' + shown + ' of ' + entries.length
         : '';
   }
@@ -2364,6 +2370,188 @@ tbody tr[hidden] {
   });
 
   sync();
+})();
+</script>
+<style data-arden-jobs-experience="css">
+/* The "Skip 3+ years" checkbox beside the location filter. Injected after
+   render by scripts/inject-experience-filter.py. It copies the favorites
+   checkbox's shape so the bar reads as one row of controls, and takes every
+   colour from the theme's custom properties so light and dark follow. */
+
+.exp-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px 0 8px;
+  border-radius: 10px;
+  background: var(--color-border);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.exp-filter:hover {
+  background: var(--color-overlay-hover, var(--color-border));
+}
+
+.exp-filter-check {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.exp-filter-check:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+
+.exp-filter-num {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
+/* Rows carry the hidden attribute; the table's own display rules must not win
+   over it (same guard the location filter needs). */
+tbody tr[hidden] {
+  display: none;
+}
+</style>
+<script type="application/json" id="arden-experience-data">{"4295949522": {"evidence": "10+ years working in an MEP engineering consulting firm on multiple building types", "minYears": 10}, "4314971665": {"evidence": "3 years of experience in manufacturing engineering with an emphasis in die stamping/die design.", "minYears": 3}, "4342797000": {"evidence": "5 to 10+ years' experience designing mechanical building systems in a consulting environment", "minYears": 5}, "4365242747": {"evidence": "10 to 20 years' experience designing mechanical building systems in a consulting environment", "minYears": 10}, "4367639683": {"evidence": "Five or more years’ experience in metal forming, roll forming, or equivalent. Should include experience with roll forming operations, progressive stamping, welding or tool & die. Preferred candidates will have strong technical troubleshooting skills, be experienced with our robot welding machines and/or CNC machine programs.", "minYears": 5}, "4439454815": {"evidence": "10+ years of experience in injection molding process engineering or equivalent technical role.", "minYears": 10}, "4440733922": {"evidence": "7+ years in automotive manufacturing, preferably Tier 1 supplier environment.", "minYears": 7}, "4450378497": {"evidence": "8–10+ years of progressive experience in mechanical design engineering, with a strong background in industrial or commercial facility projects.", "minYears": 8}, "4451116062": {"evidence": "5 to 7 years of experience in mechanical design within industrial or commercial projects.", "minYears": 5}, "4452826365": {"evidence": "5+ years of engineering experience in a manufacturing environment", "minYears": 5}, "4456358305": {"evidence": "7 yrs. of practical automotive design experience", "minYears": 7}, "4456917642": {"evidence": "Minimum 3-5 years of pharmaceutical manufacturing/maintenance experience required (parenteral/sterile filling experience preferred)", "minYears": 3}, "4457115202": {"evidence": "5 years manufacturing experience in CPG or process industry (minimum)", "minYears": 5}, "4457611949": {"evidence": "A minimum of 5 years of experience in project execution within the Power Market Sector", "minYears": 5}, "4471809117": {"evidence": "15+ years of experience with demonstrated, progressive success in a technical capacity within a global manufacturing environment", "minYears": 15}, "4476135882": {"evidence": "Experience: Minimum 5 years practical work experience designing automotive components, in particular, minimum 3 years product experience with traction motor, and Inverter & Motor integrated e-Axle related design experience preferred.", "minYears": 5}, "4478493689": {"evidence": "At least four years of related experience, or an equivalent combination of education and experience.", "minYears": 4}, "4478555579": {"evidence": "More than 3 years of automotive manufacturing experience", "minYears": 3}, "4478738071": {"evidence": "3+ years in automotive manufacturing, preferably Tier 1 supplier environment.", "minYears": 3}, "4480454944": {"evidence": "3+ years of engineering experience in a manufacturing setting", "minYears": 3}, "4480717291": {"evidence": "10+ years of experience in industrial or commercial construction projects.", "minYears": 10}, "4481203176": {"evidence": "5+ years of experience in mechanical design within automation, custom machinery, or manufacturing environments", "minYears": 5}, "4481220072": {"evidence": "7+ years of experience designing HVAC and mechanical systems", "minYears": 7}, "4481239386": {"evidence": "10+ yrs industrial/commercial construction projects", "minYears": 10}, "4481702262": {"evidence": "10+ years of experience in industrial or commercial construction projects.", "minYears": 10}, "4484293181": {"evidence": "3+ years of engineering experience in a manufacturing environment, preferably involving sheet metal fabrication, HVAC products, or related industrial manufacturing.", "minYears": 3}, "4485025183": {"evidence": "5 years of experience in manufacturing continuous improvement or operations leadership, preferably in the food industry.", "minYears": 5}, "4486407865": {"evidence": "Minimum of 3 years’ experience in product engineering designing mobile equipment or 5 years of product design in a related field.", "minYears": 3}, "4486412525": {"evidence": "10+ years of experience in industrial or commercial construction projects.", "minYears": 10}, "4488559479": {"evidence": "3+ years of related experience and may have a post-secondary degree or training in a related discipline.", "minYears": 3}, "4488608614": {"evidence": "5+ years in mechanical design field", "minYears": 5}, "4489485028": {"evidence": "More than ten years of directly relevant mechanical engineering experience with custom machinery, industrial automation, or robotic equipment. Substantial experience beyond this minimum is strongly preferred.", "minYears": 10}, "4490000385": {"evidence": "Minimum 5 years of Process Engineering, Machine Vision, Validation, Manufacturing Engineering, or related experience", "minYears": 5}}</script>
+<script data-arden-jobs-experience="js">
+/* Experience filter for the rendered jobs page.
+
+   The renderer strips script, so this is injected after render by
+   scripts/inject-experience-filter.py, together with src/experience.json (the
+   curated list of listings whose posting asks for three or more years).
+   Offset by default: the page opens showing every listing, and one checkbox
+   drops the roles that want 3+ years so the rest reads as the roles open to
+   less experience.
+
+   Visibility stays owned by the location filter. This script publishes a
+   predicate on window.__ardenJobs and asks that filter to re-apply, so the
+   town, level, favorites and experience controls compose instead of fighting
+   over the hidden attribute. */
+
+(function () {
+  'use strict';
+
+  var table = document.querySelector('table.astryx-table');
+  var data = document.getElementById('arden-experience-data');
+  if (!table || !data) return;
+
+  var flagged;
+  try {
+    flagged = JSON.parse(data.textContent || '{}');
+  } catch (error) {
+    return;
+  }
+
+  var body = table.querySelector('tbody');
+  var titleHeader = table.querySelector('thead th[data-column-key="title"]');
+  var bar = document.querySelector('.loc-filter');
+  if (!body || !titleHeader || !bar) return;
+
+  var titleIndex = titleHeader.cellIndex;
+
+  // Same key as the star and the requirements panel: the number at the end of
+  // the posting URL, so a rebuild keeps the flag attached.
+  function idOf(row) {
+    var link = row.cells[titleIndex] && row.cells[titleIndex].querySelector('a');
+    if (!link) return null;
+    var found = /-(\d{5,})\/?(?:[?#].*)?$/.exec(link.getAttribute('href') || '');
+    return found ? found[1] : null;
+  }
+
+  // A requirements sub-row has one full-width cell; it follows its listing.
+  var entries = [];
+  Array.prototype.forEach.call(body.rows, function (row) {
+    if (row.hasAttribute('data-expansion-panel')) {
+      if (entries.length) entries[entries.length - 1].panels.push(row);
+      return;
+    }
+    var id = idOf(row);
+    var info = id ? flagged[id] : null;
+    entries.push({
+      row: row,
+      id: id,
+      years: info ? info.minYears : 0,
+      evidence: info ? info.evidence : '',
+      panels: [],
+    });
+  });
+  if (!entries.length) return;
+
+  var total = entries.filter(function (entry) {
+    return entry.years >= 3;
+  }).length;
+
+  var label = document.createElement('label');
+  label.className = 'exp-filter';
+  label.title =
+    total + ' of ' + entries.length + ' listings ask for 3 or more years of experience';
+
+  var box = document.createElement('input');
+  box.type = 'checkbox';
+  box.id = 'exp-filter-check';
+  box.className = 'exp-filter-check';
+
+  var text = document.createElement('span');
+  text.className = 'exp-filter-label';
+  text.textContent = 'Skip 3+ years';
+
+  var count = document.createElement('span');
+  count.className = 'exp-filter-num';
+  count.textContent = total;
+
+  label.appendChild(box);
+  label.appendChild(text);
+  label.appendChild(count);
+
+  // In the shared bar the live count reads last, so the checkbox goes before
+  // it. Injected after the favorites checkbox, which inserts at the same point.
+  bar.insertBefore(label, bar.querySelector('.loc-filter-count'));
+
+  var state = (window.__ardenJobs = window.__ardenJobs || {});
+
+  box.addEventListener('change', function () {
+    state.experienceActive = box.checked;
+    if (typeof state.refresh === 'function') state.refresh();
+    else applyOwn();
+  });
+
+  // Fallback for a page without the location filter: hide the 3+ years rows.
+  function applyOwn() {
+    entries.forEach(function (entry) {
+      var hidden = state.experienceActive && entry.years >= 3;
+      entry.row.hidden = hidden;
+      entry.panels.forEach(function (panel) {
+        panel.hidden = hidden;
+      });
+    });
+  }
+
+  // Off on first paint: nothing is hidden until the box is checked.
+  state.experienceActive = false;
+  state.experienceFilter = function (row) {
+    for (var i = 0; i < entries.length; i += 1) {
+      if (entries[i].row === row) return entries[i].years < 3;
+    }
+    return true;
+  };
+
+  // The evidence line rides on the row as a tooltip, so a reader can see why a
+  // role was hidden without opening the posting.
+  entries.forEach(function (entry) {
+    if (entry.years < 3 || !entry.evidence) return;
+    entry.row.title = 'Requires ' + entry.years + '+ years: ' + entry.evidence;
+  });
 })();
 </script>
 <script data-arden-jobs-collapse="js">

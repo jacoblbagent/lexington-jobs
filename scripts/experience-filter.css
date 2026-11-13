@@ -1,0 +1,49 @@
+/* The "Skip 3+ years" checkbox beside the location filter. Injected after
+   render by scripts/inject-experience-filter.py. It copies the favorites
+   checkbox's shape so the bar reads as one row of controls, and takes every
+   colour from the theme's custom properties so light and dark follow. */
+
+.exp-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px 0 8px;
+  border-radius: 10px;
+  background: var(--color-border);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.exp-filter:hover {
+  background: var(--color-overlay-hover, var(--color-border));
+}
+
+.exp-filter-check {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.exp-filter-check:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+
+.exp-filter-num {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
+/* Rows carry the hidden attribute; the table's own display rules must not win
+   over it (same guard the location filter needs). */
+tbody tr[hidden] {
+  display: none;
+}

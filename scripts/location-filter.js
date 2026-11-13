@@ -197,6 +197,11 @@
     // than hiding rows itself, so both filters resolve in this one pass.
     var levelFilter = typeof shared.levelFilter === 'function' ? shared.levelFilter : null;
     var levelActive = !!shared.levelActive && !!levelFilter;
+    // The experience filter (scripts/experience-filter.js) publishes in the same
+    // shape: a predicate and whether its "Skip 3+ years" box is checked.
+    var experienceFilter =
+      typeof shared.experienceFilter === 'function' ? shared.experienceFilter : null;
+    var experienceActive = !!shared.experienceActive && !!experienceFilter;
     var shown = 0;
 
     entries.forEach(function (entry) {
@@ -209,7 +214,8 @@
           entry.towns.some(function (town) {
             return selected[town];
           })) &&
-          (!levelActive || levelFilter(entry.row));
+          (!levelActive || levelFilter(entry.row)) &&
+          (!experienceActive || experienceFilter(entry.row));
       entry.row.hidden = !visible;
       entry.panels.forEach(function (panel) {
         panel.hidden = !visible;
@@ -221,7 +227,7 @@
     value.textContent = text;
     button.setAttribute('aria-label', 'Location: ' + text);
     status.textContent =
-      filtering || favoritesOnly || levelActive
+      filtering || favoritesOnly || levelActive || experienceActive
         ? 'Showing ' + shown + ' of ' + entries.length
         : '';
   }

@@ -34,6 +34,17 @@ All. It publishes a predicate and lets the location filter resolve both at once,
 so the two stack and the bar keeps one live count: Location "Lexington" plus
 Level "Entry level" reads "Showing 6 of 62".
 
+A "Skip 3+ years" checkbox sits after Favorites, injected from
+`scripts/experience-filter.js` with `src/experience.json`: the 33 listings whose
+posting asks for three or more years of experience, each with the sentence that
+says so. It is off on first paint, so the page opens on all 62 roles, and
+checking it drops those 33 ("Showing 29 of 62"). The flag is curated from the
+full posting text rather than the requirements list, which caps at eight items
+and can cut the years line; a "preferred"/"desired" years figure, a range
+starting below three (0-3, 1-3) and an alternative path needing only two years
+do not flag a role. `scripts/build-experience-data.py` regenerates the file and
+fails if a quoted line no longer appears in the cached posting.
+
 Each listing carries its requirements as a sub-row underneath it, added after
 render by `scripts/inject-requirements.py` from `src/requirements.json`, and
 folds away on a row click (`scripts/collapse-requirements.js`).
@@ -45,6 +56,7 @@ python3 scripts/collect-jobs.py       # LinkedIn guest search -> jobs.json
 python3 scripts/scope-filter.py       # mechanical engineering scope -> jobs.me.json
 python3 scripts/collect-requirements.py  # posting pages -> requirements + level cache
 python3 scripts/build-data.py         # -> src/jobsData.ts
+python3 scripts/build-experience-data.py  # curated 3+ years flag -> src/experience.json
 bash scripts/build-docs.sh            # -> docs/index.html
 git add -A && git commit -m "Rebuild pages" && git push
 ```

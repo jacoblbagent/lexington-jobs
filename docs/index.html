@@ -903,6 +903,16 @@ th.sortable[aria-sort='ascending'] .sort-down,
 th.sortable[aria-sort='descending'] .sort-up {
   display: none;
 }
+
+/* Astryx ships its table in a wrapper with overflow-x: clip. The columns have
+   min widths that add up to more than a phone, so on a narrow screen the table
+   was cut off with no way to reach the right-hand columns. Scroll instead, and
+   keep the touch momentum on iOS. */
+.astryx-table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
 </style>
 <script data-arden-jobs-sort="js">
 /* Sortable table headers for the rendered jobs pages.

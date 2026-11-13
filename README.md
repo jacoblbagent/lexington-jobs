@@ -12,7 +12,10 @@ Live: https://jacoblbagent.github.io/lexington-jobs/
 |------|----------|
 | `docs/index.html` | Mechanical engineering roles (62) |
 
-The file is self-contained: inlined CSS, no network requests. One inline script
+The file is self-contained: inlined CSS, no network requests. The table sits in
+Astryx's scroll wrapper, which ships `overflow-x: clip`; `scripts/table-sort.css`
+overrides it to `auto` so a phone can scroll to the Location, Level and Posted
+columns instead of losing them off the right edge. One inline script
 is added after render (see `scripts/table-sort.js`) so the column headers sort:
 click a header for ascending, again for descending, a third time to return to
 the rendered "newest first" order.
